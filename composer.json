@@ -1,0 +1,58 @@
+{
+    "name": "sas/shopware-app-sdk-laravel",
+    "description": "Shopware App SDK for Laravel",
+    "type": "library",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+        "ecs": "@php ./vendor/bin/pint -v --test",
+        "ecs:fix": "@php ./vendor/bin/pint",
+        "stan": "@php ./vendor/bin/phpstan analyse --memory-limit=2G",
+        "review": [
+            "@composer ecs",
+            "@composer stan"
+        ]
+    },
+    "require": {
+        "php": "^8.1",
+        "shopware/app-php-sdk": "^2.0.0",
+        "symfony/http-client": "6.4.x-dev",
+        "nyholm/psr7": "^1.8@dev",
+        "symfony/psr-http-message-bridge": "6.4.x-dev"
+    },
+    "require-dev": {
+        "illuminate/auth": "^v10.10",
+        "illuminate/console": "^v10.10",
+        "illuminate/support": "^v10.10",
+        "illuminate/routing": "^v10.10",
+        "nunomaduro/larastan": "^2.5.2",
+        "laravel/pint": "^v1.10.6",
+        "orchestra/testbench": "^v8.7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sas\\ShopwareAppLaravelSdk\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Shape & Shift",
+            "email": "hello@shapeandshift.dev",
+            "homepage": "https://shapeandshift.dev"
+        }
+    ],
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sas\\ShopwareAppLaravelSdk\\Providers\\AppServiceProvider",
+                "Sas\\ShopwareAppLaravelSdk\\Providers\\ContextServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}

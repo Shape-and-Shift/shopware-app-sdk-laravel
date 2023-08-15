@@ -1,0 +1,10 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "no_superfluous_phpdoc_tags": true,
+        "not_operator_with_successor_space": false,
+        "void_return": true,
+        "phpdoc_to_return_type": true,
+        "Laravel/laravel_phpdoc_alignment": false
+    }
+}
