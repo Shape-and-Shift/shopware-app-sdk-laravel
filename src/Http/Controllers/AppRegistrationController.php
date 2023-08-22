@@ -2,9 +2,7 @@
 
 namespace Sas\ShopwareAppLaravelSdk\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\UrlGenerator;
-use Illuminate\Support\Facades\Config;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Sas\ShopwareAppLaravelSdk\Shop\ShopModel;
@@ -13,7 +11,7 @@ use Shopware\App\SDK\AppLifecycle;
 use Shopware\App\SDK\Registration\RegistrationService;
 use Shopware\App\SDK\Shop\ShopResolver;
 
-class AppRegistrationController extends Controller
+class AppRegistrationController extends AppController
 {
     public function __construct(
         private readonly UrlGenerator $routing,
@@ -53,16 +51,6 @@ class AppRegistrationController extends Controller
         $registration = $this->initLifecycle();
 
         return $registration->delete($request);
-    }
-
-    protected function getAppName(): string
-    {
-        return Config::get('sw-app.app_name');
-    }
-
-    protected function getAppSecret(): string
-    {
-        return Config::get('sw-app.app_secret');
     }
 
     protected function getConfirmationUrl(): string

@@ -10,4 +10,5 @@ return [
     'activate_url' => env('SW_APP_ACTIVATE_URL', '/app/activate'),
     'deactivate_url' => env('SW_APP_DEACTIVATE_URL', '/app/deactivate'),
     'delete_url' => env('SW_APP_DELETE_URL', '/app/delete'),
+    'config_changed_url' => env('SW_APP_CONFIG_CHANGED_URL', '/app/config-changed'),
 ];
