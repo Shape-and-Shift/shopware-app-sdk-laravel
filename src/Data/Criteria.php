@@ -85,7 +85,7 @@ class Criteria implements ParseAware
 
     private array $groupFields = [];
 
-    private int $totalCountMode = 1;
+    private int $totalCountMode = self::TOTAL_COUNT_MODE_NONE;
 
     private array $includes = [];
 
@@ -377,9 +377,7 @@ class Criteria implements ParseAware
             $params['includes'] = $this->includes;
         }
 
-        if ($this->totalCountMode !== null) {
-            $params['total-count-mode'] = $this->totalCountMode;
-        }
+        $params['total-count-mode'] = $this->totalCountMode;
 
         return $params;
     }

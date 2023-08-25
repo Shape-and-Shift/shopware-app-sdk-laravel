@@ -13,6 +13,8 @@ use Shopware\App\SDK\Shop\ShopResolver;
 
 class ContextServiceProvider extends ServiceProvider
 {
+    private const PL_SHOPWARE_APP_SHOP_ID = 'pl-shopware-app-shop-id';
+
     /**
      * Register any application services.
      */
@@ -22,6 +24,18 @@ class ContextServiceProvider extends ServiceProvider
             $request = $app->get(ServerRequestInterface::class);
             if (!$request instanceof ServerRequestInterface) {
                 throw new \RuntimeException('Invalid request exception');
+            }
+
+            $plShopId = $request->getHeaderLine(self::PL_SHOPWARE_APP_SHOP_ID);
+
+            // solve the shop if the `PL_SHOPWARE_APP_SHOP_ID` exists in headers
+            if (!empty($plShopId)) {
+                $shopModel = $app->get(ShopModel::class);
+                if (!$shopModel instanceof ShopModel) {
+                    throw new \RuntimeException('Invalid shop model exception');
+                }
+
+                return $shopModel->getShopFromId($plShopId);
             }
 
             $shopResolver = new ShopResolver(new ShopModel());
