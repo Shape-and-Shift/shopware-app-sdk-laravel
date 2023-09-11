@@ -3,6 +3,7 @@
 namespace Sas\ShopwareAppLaravelSdk\Trait;
 
 use Http\Discovery\Psr17Factory;
+use Http\Discovery\Psr18Client;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -28,7 +29,11 @@ trait ShopwareClient
     {
         $shop = $this->getShop();
 
-        $clientFactory = new ClientFactory();
+        $clientFactory = new ClientFactory(
+            cache()->store(),
+            new Psr18Client(),
+            logger()->getLogger(),
+        );
 
         return $clientFactory->createClient($shop);
     }
