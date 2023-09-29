@@ -15,8 +15,19 @@ use Shopware\App\SDK\Shop\ShopInterface;
 
 trait ShopwareClient
 {
+    protected ?ShopInterface $shop = null;
+
+    protected function setShop(ShopInterface $shop): void
+    {
+        $this->shop = $shop;
+    }
+
     protected function getShop(): ShopInterface
     {
+        if ($this->shop instanceof ShopInterface) {
+            return $this->shop;
+        }
+
         $shop = app()->get(ShopInterface::class);
         if (!$shop instanceof ShopInterface) {
             throw new MissingShopParameterException();
