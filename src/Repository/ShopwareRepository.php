@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Psr\Http\Client\ClientExceptionInterface;
 use Sas\ShopwareAppLaravelSdk\Data\Criteria;
 use Sas\ShopwareAppLaravelSdk\Trait\ShopwareClient;
+use Shopware\App\SDK\Shop\ShopInterface;
 
 abstract class ShopwareRepository
 {
@@ -21,8 +22,12 @@ abstract class ShopwareRepository
      * @throws ClientExceptionInterface
      * @throws \JsonException
      */
-    public function search(Criteria $criteria): ?array
+    public function search(Criteria $criteria, ShopInterface $shop = null): ?array
     {
+        if ($shop instanceof ShopInterface) {
+            $this->setShop($shop);
+        }
+
         $response = $this->swPostRequest(
             sprintf('/api/search/%s', $this->getEntityEndpoint()),
             $criteria->parse(),
@@ -35,8 +40,12 @@ abstract class ShopwareRepository
      * @throws ClientExceptionInterface
      * @throws \JsonException
      */
-    public function create(array $data): ?array
+    public function create(array $data, ShopInterface $shop = null): ?array
     {
+        if ($shop instanceof ShopInterface) {
+            $this->setShop($shop);
+        }
+
         return $this->swPostRequest(
             sprintf('/api/%s', $this->getEntityEndpoint()),
             $data,
@@ -47,8 +56,12 @@ abstract class ShopwareRepository
      * @throws ClientExceptionInterface
      * @throws \JsonException
      */
-    public function update(string $id, array $data): ?array
+    public function update(string $id, array $data, ShopInterface $shop = null): ?array
     {
+        if ($shop instanceof ShopInterface) {
+            $this->setShop($shop);
+        }
+
         return $this->swPatchRequest(
             sprintf('/api/%s/%s', $this->getEntityEndpoint(), $id),
             array_merge([
@@ -60,8 +73,12 @@ abstract class ShopwareRepository
     /**
      * @throws ClientExceptionInterface
      */
-    public function delete(string $id): ?array
+    public function delete(string $id, ShopInterface $shop = null): ?array
     {
+        if ($shop instanceof ShopInterface) {
+            $this->setShop($shop);
+        }
+
         return $this->swDeleteRequest(
             sprintf('/api/%s/%s', $this->getEntityEndpoint(), $id),
         );
@@ -71,8 +88,12 @@ abstract class ShopwareRepository
      * @throws ClientExceptionInterface
      * @throws \JsonException
      */
-    public function sync(string $action, array $payload): ?array
+    public function sync(string $action, array $payload, ShopInterface $shop = null): ?array
     {
+        if ($shop instanceof ShopInterface) {
+            $this->setShop($shop);
+        }
+
         return $this->swPostRequest(
             'api/_action/sync',
             [
